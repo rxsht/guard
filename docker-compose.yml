@@ -5,11 +5,10 @@ services:
     build: .
     container_name: plagiarismguard-app
     restart: unless-stopped
-    ports:
-      - "3000:3000"
     environment:
       NODE_ENV: production
       PORT: 3000
+      NEXT_TELEMETRY_DISABLED: "1"
     volumes:
       # Персистентное хранилище для загружаемых файлов и documents.json
       - ./data:/app/data
