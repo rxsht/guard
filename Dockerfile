@@ -31,9 +31,6 @@ ENV NODE_ENV=production
 ENV PORT=3000
 ENV NEXT_TELEMETRY_DISABLED=1
 
-# Создаем непривилегированного пользователя
-RUN groupadd -r nodejs && useradd -r -g nodejs nodejs
-
 # Создаем директорию для данных (файлы и база документов)
 RUN mkdir -p /app/data/uploads
 
@@ -43,10 +40,6 @@ COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/.next ./.next
 COPY --from=builder /app/public ./public
 COPY --from=builder /app/next.config.mjs ./next.config.mjs
-
-# Права на файлы под непривилегированного пользователя
-RUN chown -R nodejs:nodejs /app
-USER nodejs
 
 # Директория с файлами/БД будет монтироваться как volume
 VOLUME ["/app/data"]
