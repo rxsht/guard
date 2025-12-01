@@ -5,7 +5,8 @@ WORKDIR /app
 # Установка зависимостей
 COPY package.json package-lock.json* ./
 
-RUN npm ci
+# Используем install вместо ci, чтобы не требовать package-lock.json
+RUN npm install --omit=dev
 
 FROM node:20-bookworm AS builder
 
